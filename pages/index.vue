@@ -30,16 +30,41 @@
         <div class="container">
           <span class="font-weight-thin headline">Please Enter The Information:</span>
           <div class="modal-header">
-            <!-- <slot name="header">
-              <div class="card">
-                <p><span>Location: </span> {{ data.branches_name }}</p>
-                <p><span>Asset Code: </span>{{ data.asset_code }}</p>
-                <p><span>Reward Rate: </span>{{ data.reward_rates }}</p>
-                <p><span>Minimum spend: </span>{{ data.minimum_spend }}</p>
-              </div>
-            </slot> -->
           </div>
-          <div style="padding: 3rem 3%">
+          <div style="padding: 3rem 3rem 0 3rem">
+            <v-form
+              ref="form1"
+              lazy-validation
+            >
+              <v-text-field
+                label="Approval Code"
+                outlined
+                dense
+                type="password"
+                autocomplete="off" 
+                readonly 
+                onfocus="this.removeAttribute('readonly')"
+                v-model="approval_code"
+              ></v-text-field>
+              <v-btn color="#415593" style="width: 100%" :loading="loading" @click="handleNext()">
+                <span style="color: #fafafa">Next</span>
+              </v-btn>
+            </v-form>
+          </div>
+        </div>
+      </v-sheet>
+    </v-dialog>
+    <v-dialog
+      v-model="dialogNext"
+      width="90%"
+    >
+      <v-sheet>
+        <div class="container">
+          <span class="font-weight-thin headline">Please Enter The Information:</span>
+          <div class="modal-header">
+           
+          </div>
+          <div style="padding: 3rem 3rem 0 3rem">
             <v-form
               ref="form1"
               lazy-validation
@@ -48,22 +73,18 @@
                 label="Receipt NO"
                 outlined
                 dense
+                type="text"
                 v-model="receipt_no"
               ></v-text-field>
               <v-text-field
                 label="Amount"
                 outlined
                 dense
+                type="number"
                 v-model="amount"
               ></v-text-field>
-              <v-text-field
-                label="Approval Code"
-                outlined
-                dense
-                v-model="approval_code"
-              ></v-text-field>
-              <v-btn color="#415593" style="width: 100%" :loading="loading" @click="handleNext()">
-                <span style="color: #fafafa">Next</span>
+              <v-btn color="#415593" style="width: 100%" :loading="loading" @click="handleSubmit()">
+                <span style="color: #fafafa">Sumbit</span>
               </v-btn>
             </v-form>
           </div>
@@ -97,6 +118,7 @@
 
 <script>
 import { branch } from '~/utils/get-branch.js';
+import Cookie from 'js-cookie';
 
 export default {
   middleware: ['auth'],
@@ -105,13 +127,14 @@ export default {
     return {
       dialogSelect: false,
       dialogQR: false,
+      dialogNext: false,
       loading: false,
       data: null,
 
       location: '',
-      receipt_no: '1',
-      amount: '1',
-      approval_code: 'ABCDEF',
+      receipt_no: '',
+      amount: '',
+      approval_code: '',
       qr: ''
     }
   },
@@ -124,24 +147,34 @@ export default {
   },
   methods: {
     handleSelect(index) {
-      this.dialogSelect = true;
+      if(Cookie.get('auth') !== '') {
+        this.dialogNext = true
+      } else {
+        this.dialogSelect = true;
+      }
       this.data = this.merchant[index];
       this.location = this.merchant[index].branches_name
     },
     handleNext() {
+      this.dialogNext = true;
+    },
+    handleSubmit() {
       this.loading = true;
       this.$store.dispatch('users/handleSetQR', {
         location: this.location,
         receipt_no: this.receipt_no,
         amount: this.amount,
-        approval_code: this.approval_code
+        approval_code: this.approval_code !== '' ? this.approval_code : Cookie.get('auth')
       })
       .then(()=> {
         this.qr = this.$store.state.users.qr;
         this.dialogQR = true;
         this.loading = false;
+        if(this.approval_code !== '') {
+          Cookie.set('auth', this.approval_code, { expires: 1 });
+        }
       })
-    },
+    }
   }
 }
 </script>
@@ -157,6 +190,7 @@ export default {
   }
   .logo {
     width: 40px;
+    height: 40px;
     border: 1px solid grey;
     border-radius: 6px;
   }

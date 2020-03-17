@@ -68,7 +68,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 50% ;
+    height: 100vh;
   }
   .container > div {
     padding: 1rem 3rem;
