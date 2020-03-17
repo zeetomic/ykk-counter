@@ -147,7 +147,7 @@ export default {
   },
   methods: {
     handleSelect(index) {
-      if(Cookie.get('auth') !== '') {
+      if(Cookie.get('auth') !== '' && Cookie.get('auth')) {
         this.dialogNext = true
       } else {
         this.dialogSelect = true;
