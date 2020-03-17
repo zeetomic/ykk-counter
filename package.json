@@ -1,0 +1,25 @@
+{
+  "name": "yingkok",
+  "version": "1.0.0",
+  "description": "My prime Nuxt.js project",
+  "author": "Piset Heang",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.9.5",
+    "cookieparser": "^0.1.0",
+    "js-cookie": "^2.2.1",
+    "nuxt": "^2.0.0",
+    "vue-qr": "^2.2.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2"
+  }
+}
