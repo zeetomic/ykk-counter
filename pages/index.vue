@@ -118,6 +118,7 @@
 
 <script>
 import { branch } from '~/utils/get-branch.js';
+import { message } from "~/utils/Mixin/message.js";
 import Cookie from 'js-cookie';
 
 export default {
@@ -167,12 +168,14 @@ export default {
         approval_code: this.approval_code !== '' ? this.approval_code : Cookie.get('auth')
       })
       .then(()=> {
-        this.qr = this.$store.state.users.qr;
-        this.dialogQR = true;
-        this.loading = false;
-        if(this.approval_code !== '') {
+        if(this.type === 'success' && this.approval_code !== '') {
           Cookie.set('auth', this.approval_code, { expires: 1 });
+          this.qr = this.$store.state.users.qr;
+          this.dialogQR = true;
+        } else {
+          this.$toast.error(this.msg);  
         }
+        this.loading = false;
       })
     }
   }

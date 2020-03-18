@@ -24,6 +24,20 @@ export default {
   */
   css: [
   ],
+  toast: {
+    position: 'top-center',
+    theme: "bubble", 
+    duration: '3000',
+    register: [ // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
+  },
   /*
   ** Plugins to load before mounting the App
   */
@@ -40,7 +54,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/toast',
   ],
   /*
   ** vuetify module configuration
@@ -63,5 +78,5 @@ export default {
   },
   env: {
     baseUrl: 'https://testnet-api.zeetomic.com/pub/v1'
-  },
+  }
 }
