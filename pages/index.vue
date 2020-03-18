@@ -9,13 +9,17 @@
         <div class="result">
           <v-card elevation="6">
           <div class="table" id="TagName"  v-for="(item, index) in handleSearch" :key="item.branches_name" @click="handleSelect(index)">
-            <v-row class="d-flex justify-center">
-              <img :src="item.logo_uri" alt="logo" class="logo">
+            <v-row>
+              <v-col class="d-flex justify-center align-center">
+                <img :src="item.logo_uri" alt="logo" class="logo">
+              </v-col>
+              <v-col>
+                <div class="body-2"><span class="subtitle-1 my-title">Location: </span> {{ item.branches_name }} </div>
+                <div class="body-2"><span class="subtitle-1 my-title">Asset Code: </span> {{ item.asset_code }} </div>
+                <div class="body-2"><span class="subtitle-1 my-title">Reward Rate: </span> {{ item.reward_rates }} </div>
+                <div class="body-2"><span class="subtitle-1 my-title">Minimum Spend: </span> {{ item.minimum_spend }} </div>
+              </v-col>
             </v-row>
-            <div class="body-2"><span class="subtitle-1 my-title">Location: </span> {{ item.branches_name }} </div>
-            <div class="body-2"><span class="subtitle-1 my-title">Asset Code: </span> {{ item.asset_code }} </div>
-            <div class="body-2"><span class="subtitle-1 my-title">Reward Rate: </span> {{ item.reward_rates }} </div>
-            <div class="body-2"><span class="subtitle-1 my-title">Minimum Spend: </span> {{ item.minimum_spend }} </div>
           </div>
           </v-card>
         </div>
@@ -194,8 +198,8 @@ export default {
     font-size: 16px;
   }
   .logo {
-    width: 40px;
-    height: 40px;
+    max-width: 120px;
+    max-height: 120px;
     border: 1px solid grey;
     border-radius: 6px;
   }
@@ -247,14 +251,10 @@ export default {
   }
   .my-title {
     color: #2E4053;
-    margin-left: 20px;
   }
   .logo {
     display: flex;
     justify-content: center;
-  }
-  .result {
-    text-align:center;
   }
   .slide-fade-enter-active {
     transition: all .3s ease;
