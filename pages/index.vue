@@ -168,7 +168,7 @@ export default {
         approval_code: this.approval_code !== '' ? this.approval_code : Cookie.get('auth')
       })
       .then(()=> {
-        if(this.type === 'success' && this.approval_code !== '') {
+        if(this.approval_code !== '') {
           Cookie.set('auth', this.approval_code, { expires: 1 });
           this.qr = this.$store.state.users.qr;
           this.dialogQR = true;
