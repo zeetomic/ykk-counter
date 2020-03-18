@@ -123,6 +123,7 @@ import Cookie from 'js-cookie';
 
 export default {
   middleware: ['auth'],
+  mixins: [message],
   asyncData: branch,
   data() {
     return {
@@ -168,12 +169,13 @@ export default {
         approval_code: this.approval_code !== '' ? this.approval_code : Cookie.get('auth')
       })
       .then(()=> {
-        if(this.approval_code !== '') {
+        if(this.msg !=='error' && this.approval_code !== '') {
           Cookie.set('auth', this.approval_code, { expires: 1 });
           this.qr = this.$store.state.users.qr;
           this.dialogQR = true;
         } else {
-          this.$toast.error(this.msg);  
+          this.$toast.error(this.msg); 
+          Cookie.remove('auth'); 
         }
         this.loading = false;
       })
