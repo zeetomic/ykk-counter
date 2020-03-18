@@ -168,16 +168,16 @@ export default {
         amount: this.amount,
         approval_code: this.approval_code !== '' ? this.approval_code : Cookie.get('auth')
       })
-      .then(()=> {
-        if(this.msg !=='error' && this.approval_code !== '') {
-          Cookie.set('auth', this.approval_code, { expires: 1 });
-          this.qr = this.$store.state.users.qr;
-          this.dialogQR = true;
+      .then(async()=> {
+        if(this.type !== 'error' && this.approval_code !== '') {
+          await Cookie.set('auth', this.approval_code, { expires: 1 });
+          this.qr = await this.$store.state.users.qr;
+          this.dialogQR = await true;
         } else {
-          this.$toast.error(this.msg); 
-          Cookie.remove('auth'); 
+          await this.$toast.error(this.msg); 
+          await Cookie.remove('auth'); 
         }
-        this.loading = false;
+        this.loading = await false;
       })
     }
   }
