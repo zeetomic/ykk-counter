@@ -8,7 +8,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || 'Yingkok QR Generate' }
     ],
     link: [
       { href:"https://fonts.googleapis.com/css?family=Titillium+Web&display=swap", rel:"stylesheet" },
@@ -73,6 +73,8 @@ export default {
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     theme: {
       dark: false,
     }
@@ -90,5 +92,5 @@ export default {
   env: {
     baseUrl: 'https://testnet-api.zeetomic.com/pub/v1'
   },
-  css: ["~/assets/style.css"]
+  // css: ["~/assets/style.css"]
 }
