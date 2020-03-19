@@ -1,7 +1,6 @@
 <template>
   <div class="app">
     <div class="container">
-      <label>Search For Location:</label>
       <div class="search">
         <input type="text" placeholder="Search" class="input" v-model="location">
       </div>
