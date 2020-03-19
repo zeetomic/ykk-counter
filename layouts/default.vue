@@ -2,7 +2,6 @@
   <v-app class="app">
     <v-app-bar
       dense
-      color="#0B9C9C"
     >
       <div style="padding-top: 5px"></div>
       <router-link to="/" exact>
@@ -27,11 +26,11 @@ export default {
 </script>
 
 <style>
-.app {
-  font-family: 'Titillium Web'!important;
-}
 .logoY {
   width: 46px;
   margin-top: 10px;
+}
+.v-app-bar {
+  background: linear-gradient(120deg, #3498db, #8e44ad)!important;
 }
 </style>

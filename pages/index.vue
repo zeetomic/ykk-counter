@@ -47,7 +47,8 @@
                 outlined
                 dense
                 type="password"
-                autocomplete="off" 
+                autocomplete="off"
+                id="txtPassword" 
                 readonly 
                 onfocus="this.removeAttribute('readonly')"
                 :rules="approval_codeRule"
@@ -125,7 +126,7 @@
             </v-row> 
           </div>
         </div>
-        <v-btn text @click="dialogQR = false">Close</v-btn>
+        <v-btn text @click="dialogQR = false">Finish</v-btn>
       </v-card>
     </v-dialog>
   </div>
@@ -201,6 +202,8 @@ export default {
             await Cookie.remove('auth'); 
           }
           this.loading = await false;
+          this.receipt_no = '';
+          this.amount = '';
         })
       }   
     }
@@ -216,6 +219,9 @@ export default {
   }
   input:focus {
     font-size: 16px;
+  }
+  #txtPassword{
+    -webkit-text-security:disc;
   }
   .logo {
     max-width: 120px;

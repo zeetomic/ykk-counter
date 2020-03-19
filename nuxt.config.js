@@ -56,7 +56,18 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/toast',
+    '@nuxtjs/pwa'
   ],
+  icon: {
+    iconSrc: './assets/yingkok512.png',
+  },
+  manifest: {
+    name: 'Yingkok',
+    short_name: 'Yingkok',
+    description: 'QR Code Generate',
+    theme_color: '#fafafa',
+    start_url: '/'
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
@@ -78,5 +89,6 @@ export default {
   },
   env: {
     baseUrl: 'https://testnet-api.zeetomic.com/pub/v1'
-  }
+  },
+  css: ["~/assets/style.css"]
 }
