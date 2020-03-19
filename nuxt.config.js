@@ -11,7 +11,6 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || 'Yingkok QR Generate' }
     ],
     link: [
-      { href:"https://fonts.googleapis.com/css?family=Titillium+Web&display=swap", rel:"stylesheet" },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },

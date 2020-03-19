@@ -1,9 +1,9 @@
 <template>
   <div class="app">
     <div class="container">
+      <label>Search For Location:</label>
       <div class="search">
-        <br>
-        <input type="text" placeholder="Search For Location" class="input" v-model="location">
+        <input type="text" placeholder="Search" class="input" v-model="location">
       </div>
       <transition name="slide-fade">
         <div class="result">
