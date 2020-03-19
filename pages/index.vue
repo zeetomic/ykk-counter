@@ -3,7 +3,7 @@
     <div class="container">
       <div class="search">
         <br>
-        <input type="text" placeholder="Search" class="input" v-model="location">
+        <input type="text" placeholder="Search For Location" class="input" v-model="location">
       </div>
       <transition name="slide-fade">
         <div class="result">
@@ -29,16 +29,18 @@
     <v-dialog
       v-model="dialogSelect"
       width="90%"
+      persistent
     >
       <v-sheet>
-        <div class="container">
-          <span class="font-weight-thin headline">Please Enter The Information:</span>
+        <div class="dialog_container">
+          <span class="font-weight-thin headline pa-4">Please Enter The Information:</span>
           <div class="modal-header">
           </div>
           <div style="padding: 3rem 3rem 0 3rem">
             <v-form
-              ref="form1"
+              ref="form"
               lazy-validation
+              v-model="valid"
             >
               <v-text-field
                 label="Approval Code"
@@ -48,23 +50,27 @@
                 autocomplete="off" 
                 readonly 
                 onfocus="this.removeAttribute('readonly')"
+                :rules="approval_codeRule"
                 v-model="approval_code"
               ></v-text-field>
-              <v-btn color="#415593" style="width: 100%" :loading="loading" @click="handleNext()">
+              <v-btn color="#415593" style="width: 100%" @click="handleNext()">
                 <span style="color: #fafafa">Next</span>
               </v-btn>
             </v-form>
           </div>
         </div>
+        <br>
+        <v-btn text @click="dialogSelect = false"><span style="color: red">Cancel</span></v-btn>
       </v-sheet>
     </v-dialog>
     <v-dialog
       v-model="dialogNext"
       width="90%"
+      persistent
     >
       <v-sheet>
-        <div class="container">
-          <span class="font-weight-thin headline">Please Enter The Information:</span>
+        <div class="dialog_container">
+          <span class="font-weight-thin headline pa-4">Please Enter The Information:</span>
           <div class="modal-header">
            
           </div>
@@ -72,12 +78,14 @@
             <v-form
               ref="form1"
               lazy-validation
+              v-model="valid"
             >
               <v-text-field
                 label="Receipt NO"
                 outlined
                 dense
                 type="text"
+                :rules="receipt_noRule"
                 v-model="receipt_no"
               ></v-text-field>
               <v-text-field
@@ -85,23 +93,25 @@
                 outlined
                 dense
                 type="number"
+                :rules="amountRule"
                 v-model="amount"
               ></v-text-field>
-              <v-btn color="#415593" style="width: 100%" :loading="loading" @click="handleSubmit()">
-                <span style="color: #fafafa">Sumbit</span>
-              </v-btn>
+              <v-btn class="btn-submit" style="width: 100%" :loading="loading" @click="handleSubmit()">Sumbit</v-btn>
             </v-form>
           </div>
         </div>
+        <br>
+        <v-btn text @click="dialogNext = false">Back</v-btn>
       </v-sheet>
     </v-dialog>
   <!-- dialog QR -->
     <v-dialog
       v-model="dialogQR"
+      persistent
     >
       <v-card>
-        <div class="container">
-          <span class="font-weight-thin headline">QR Code:</span>
+        <div class="dialog_container">
+          <span class="font-weight-thin headline pa-4">QR Code:</span>
           <div class="qr_code">
             <v-row class="d-flex justify-center"> 
               <client-only>
@@ -115,6 +125,7 @@
             </v-row> 
           </div>
         </div>
+        <v-btn text @click="dialogQR = false">Close</v-btn>
       </v-card>
     </v-dialog>
   </div>
@@ -123,11 +134,12 @@
 <script>
 import { branch } from '~/utils/get-branch.js';
 import { message } from "~/utils/Mixin/message.js";
+import { validation } from "~/utils/Mixin/validation.js";
 import Cookie from 'js-cookie';
 
 export default {
   middleware: ['auth'],
-  mixins: [message],
+  mixins: [message, validation],
   asyncData: branch,
   data() {
     return {
@@ -162,27 +174,35 @@ export default {
       this.location = this.merchant[index].branches_name
     },
     handleNext() {
-      this.dialogNext = true;
+      if(this.$refs.form.validate()) {
+        this.dialogNext = true;
+      }
     },
     handleSubmit() {
-      this.loading = true;
-      this.$store.dispatch('users/handleSetQR', {
-        location: this.location,
-        receipt_no: this.receipt_no,
-        amount: this.amount,
-        approval_code: this.approval_code !== '' ? this.approval_code : Cookie.get('auth')
-      })
-      .then(async()=> {
-        if(this.type !== 'error' && this.approval_code !== '') {
-          await Cookie.set('auth', this.approval_code, { expires: 1 });
-          this.qr = await this.$store.state.users.qr;
-          this.dialogQR = await true;
-        } else {
-          await this.$toast.error(this.msg); 
-          await Cookie.remove('auth'); 
-        }
-        this.loading = await false;
-      })
+      if(this.$refs.form1.validate()) {
+        this.loading = true;
+        this.$store.dispatch('users/handleSetQR', {
+          location: this.location,
+          receipt_no: this.receipt_no,
+          amount: this.amount,
+          approval_code: this.approval_code !== '' ? this.approval_code : Cookie.get('auth')
+        })
+        .then(async()=> {
+          if(this.type !== 'error') {
+            if(this.approval_code !== '') {
+              await Cookie.set('auth', this.approval_code, { expires: 1 });
+            }
+            this.qr = await this.$store.state.users.qr;
+            this.dialogQR = await true;
+            this.dialogSelect = await false;
+            this.dialogNext = await false;
+          } else {
+            await this.$toast.error(this.msg); 
+            await Cookie.remove('auth'); 
+          }
+          this.loading = await false;
+        })
+      }   
     }
   }
 }
@@ -209,6 +229,10 @@ export default {
   .qr_code img {
     border: 1px solid grey;
     border-radius: 6px;
+  }
+  .btn-submit {
+    background: linear-gradient(120deg, #3498db, #8e44ad);
+    color: #fafafa;
   }
   .app {
     padding: 0 24%;
