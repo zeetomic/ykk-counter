@@ -301,10 +301,15 @@ export default {
     .app {
       padding: 0 1rem;
     }
+    .headline {
+      font-size: 18px!important;
+    }
   }
   /* Tablet */
   @media only screen and (min-width: 501px) and (max-width: 767px) {
-      
+    .app {
+      padding: 0 2rem;
+    }
   }
   /* Normal */
   @media only screen and (min-width: 768px) and (max-width: 1199px){
