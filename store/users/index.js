@@ -34,7 +34,6 @@ export const actions = {
       if(res.data.token) {
         const token = await res.data.token;
         await commit('set_token', token);
-        await commit('set_msg', res.data.message);
         await commit('set_type', 'success');
         Cookie.set('jwt', token);
         this.$router.push('/');

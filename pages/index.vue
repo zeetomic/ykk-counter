@@ -195,7 +195,6 @@ export default {
             this.qr = await this.$store.state.users.qr;
             this.dialogQR = await true;
             this.dialogSelect = await false;
-            this.dialogNext = await false;
           } else {
             await this.$toast.error(this.msg); 
             await Cookie.remove('auth'); 
