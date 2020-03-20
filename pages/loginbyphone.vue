@@ -11,10 +11,10 @@
             lazy-validation
           >
             <v-text-field
-              label="Email"
-              v-model="email"
-              type="email"
-              :rules="emailRule"
+              label="phone"
+              v-model="phone"
+              type="tel"
+              :rules="phoneRule"
               outlined
               dense
               dark
@@ -34,7 +34,7 @@
           <v-row>
             <v-col></v-col>
             <v-col class="d-flex justify-end">
-              <v-btn dark text nuxt to="loginbyphone">Login By Phone</v-btn>
+              <v-btn dark text nuxt to="login">Login By Email</v-btn>
             </v-col>
           </v-row>
         </v-col>
@@ -46,14 +46,14 @@
 </template>
 
 <script>
-import { validateLogin } from '~/utils/Mixin/validateLogin.js';
+import { validateLoginPhone } from '~/utils/Mixin/validateLoginPhone.js';
 import { message } from '~/utils/Mixin/message';
 export default {
   layout: 'login',
-  mixins: [validateLogin, message],
+  mixins: [validateLoginPhone, message],
   data() {
     return {
-      email: '',
+      phone: '+855',
       password: '',
 
       loading:false
@@ -63,8 +63,8 @@ export default {
     handleLogin() {
       if(this.$refs.form.validate()) {
         this.loading = true;
-        this.$store.dispatch('users/handleLogin', {
-          email: this.email,
+        this.$store.dispatch('users/handleLoginbyphone', {
+          phone: this.phone,
           password: this.password
         })
         .then(() => {

@@ -46,6 +46,27 @@ export const actions = {
       }
     })
   },
+  async handleLoginbyphone({commit}, data) {
+    await this.$axios.post(process.env.baseUrl + '/loginbyphone', {
+      phone: data.phone,
+      password: data.password
+    })
+    .then(async(res) => {
+      if(res.data.token) {
+        const token = await res.data.token;
+        await commit('set_token', token);
+        await commit('set_type', 'success');
+        Cookie.set('jwt', token);
+        this.$router.push('/');
+      } else if(res.data.message) {
+        await commit('set_msg', res.data.message);
+        await commit('set_type', 'error');
+      } else {
+        await commit('set_msg', res.data.error.message);
+        await commit('set_type', 'error');
+      }
+    })
+  },
   async handleSetQR({commit}, data) {
     const token = Cookie.get('jwt');
     const config = {
