@@ -31,12 +31,6 @@
             ></v-text-field>
           </v-form>
           <v-btn class="btn-login" :loading="loading" @click="handleLogin()">Login</v-btn>
-          <v-row>
-            <v-col></v-col>
-            <v-col class="d-flex justify-end">
-              <v-btn dark text nuxt to="loginbyphone">Login By Phone</v-btn>
-            </v-col>
-          </v-row>
         </v-col>
         <v-col cols="12" xs="12" sm="12" md="6" lg="6" xl="6" class="pa-6">
         </v-col>
