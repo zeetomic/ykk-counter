@@ -4,25 +4,23 @@
       <div class="search">
         <input type="text" placeholder="Search" class="input" v-model="location">
       </div>
-      <transition name="slide-fade">
-        <div class="result">
-          <v-card elevation="6">
-          <div class="table" id="TagName"  v-for="(item, index) in handleSearch" :key="item.branches_name" @click="handleSelect(index)">
-            <v-row>
-              <v-col class="d-flex justify-center align-center">
-                <img :src="item.logo_uri" alt="logo" class="logo">
-              </v-col>
-              <v-col>
-                <div class="body-2"><span class="subtitle-1 my-title">Location: </span> {{ item.branches_name }} </div>
-                <div class="body-2"><span class="subtitle-1 my-title">Asset Code: </span> {{ item.asset_code }} </div>
-                <div class="body-2"><span class="subtitle-1 my-title">Reward Rate: </span> {{ item.reward_rates }} </div>
-                <div class="body-2"><span class="subtitle-1 my-title">Minimum Spend: </span> {{ item.minimum_spend }} </div>
-              </v-col>
-            </v-row>
-          </div>
-          </v-card>
+      <div class="result">
+        <v-card elevation="6">
+        <div class="table" id="TagName"  v-for="(item, index) in handleSearch" :key="item.branches_name" @click="handleSelect(index)">
+          <v-row>
+            <v-col class="d-flex justify-center align-center">
+              <img :src="item.logo_uri" alt="logo" class="logo">
+            </v-col>
+            <v-col>
+              <div class="body-2"><span class="subtitle-1 my-title">Location: </span> {{ item.branches_name }} </div>
+              <div class="body-2"><span class="subtitle-1 my-title">Asset Code: </span> {{ item.asset_code }} </div>
+              <div class="body-2"><span class="subtitle-1 my-title">Reward Rate: </span> {{ item.reward_rates }} </div>
+              <div class="body-2"><span class="subtitle-1 my-title">Minimum Spend: </span> {{ item.minimum_spend }} </div>
+            </v-col>
+          </v-row>
         </div>
-      </transition>
+        </v-card>
+      </div>
     </div>
   <!-- dialog -->
     <v-dialog
@@ -47,8 +45,7 @@
                 dense
                 type="password"
                 autocomplete="off"
-                id="txtPassword" 
-                readonly 
+                readonly
                 onfocus="this.removeAttribute('readonly')"
                 :rules="approval_codeRule"
                 v-model="approval_code"
@@ -165,8 +162,8 @@ export default {
   },
   methods: {
     handleSelect(index) {
-      if(Cookie.get('auth') !== '' && Cookie.get('auth')) {
-        this.dialogNext = true
+      if(Cookie.get('auth') && Cookie.get('auth') !== '') {
+        this.dialogNext = true;
       } else {
         this.dialogSelect = true;
       }
@@ -210,16 +207,13 @@ export default {
 </script>
 
 <style scoped>
-  input:focus,
+  input,
   .btn-search:focus {
     outline: none;
     padding: 0 6px;
   }
   input:focus {
     font-size: 16px;
-  }
-  #txtPassword{
-    -webkit-text-security:disc;
   }
   .logo {
     max-width: 120px;
@@ -243,7 +237,6 @@ export default {
   }
   .container {
     min-height: 93vh;
-    /* background: #FF5733; */
     border: 1px;
     border-radius: 4px;
   }
@@ -271,7 +264,7 @@ export default {
   .table {
     cursor: pointer;
     background: linear-gradient(120deg, #3498db, #8e44ad);
-    border: 1px solid grey;
+    border: 1px solid #fafafa;
     border-radius: 6px;
     margin: 5px 0;
     color: #fafafa;
@@ -284,18 +277,6 @@ export default {
     display: flex;
     justify-content: center;
   }
-  .slide-fade-enter-active {
-    transition: all .3s ease;
-  }
-  .slide-fade-leave-active {
-    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
-  .slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active below version 2.1.8 */ {
-    transform: translateX(10px);
-    opacity: 0;
-  }
-
   /* SmartPhone */
   @media only screen and (max-width: 500px) {
     .app {

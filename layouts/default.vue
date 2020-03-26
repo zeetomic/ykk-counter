@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app class="app" id="application">
     <v-app-bar
       dense
     >
@@ -9,6 +9,10 @@
       </router-link>
       <span class="font-weight-thin white--text">YINGKOK</span>
       <v-spacer></v-spacer>
+      <v-btn text @click="handleClick">
+        <v-icon>mdi-brightness-6</v-icon>
+        <span id="mode">nightmode</span>
+      </v-btn>
       <v-btn text @click="logout" class="white--text">Sign Out</v-btn>
     </v-app-bar>
     <nuxt />
@@ -20,6 +24,17 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('users/handleLogout')
+    },
+    async handleClick() {
+      if(!this.$vuetify.theme.dark) {
+        this.$vuetify.theme.dark = await true;
+        document.querySelector('input').style.border = await "1px solid #fafafa";
+        document.getElementById('mode').innerHTML = await "daymode";
+      }else if(this.$vuetify.theme.dark) {
+        this.$vuetify.theme.dark = await false;
+        document.querySelector('input').style.border = await "1px solid grey";
+        document.getElementById('mode').innerHTML = await "nightmode";
+      }
     }
   }
 }
