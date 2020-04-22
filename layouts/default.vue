@@ -7,7 +7,7 @@
       <router-link to="/" exact>
         <img class="logoY" src="~/assets/yingkok.png" alt="logo">
       </router-link>
-      <span class="font-weight-thin white--text">YINGKOK</span>
+      <span class="font-weight-thin white--text">YINKOK</span>
       <v-spacer></v-spacer>
       <v-btn text @click="handleClick">
         <v-icon>mdi-brightness-6</v-icon>

@@ -3,7 +3,7 @@
     <div class="container">
       <v-row>
         <v-col cols="12" xs="12" sm="12" md="6" lg="6" xl="6">
-          <h2>Login To YINGKOK</h2>
+          <h2>Login To YINKOK</h2>
           <br>
           <v-form
             ref="form"
