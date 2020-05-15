@@ -89,7 +89,7 @@ export default {
     }
   },
   env: {
-    baseUrl: 'https://testnet-api.zeetomic.com/pub/v1'
+    baseUrl: 'https://pro-api.zeetomic.com/pub/v1'
   },
   // css: ["~/assets/style.css"]
 }
